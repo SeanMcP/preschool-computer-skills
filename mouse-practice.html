@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Mouse Practice</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐭</text></svg>"
+    />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+      body {
+        align-items: center;
+        display: flex;
+        font-family: sans-serif;
+        justify-content: center;
+        text-align: center;
+      }
+
+      main {
+        height: 80vw;
+        margin: 0 auto;
+        width: 80vw;
+      }
+
+      #field {
+        border: 2px dashed hsla(0, 0%, 0%, 10%);
+        border-radius: 1rem;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(10, 1fr);
+        height: 100%;
+        padding: 1rem;
+      }
+
+      #animal::before {
+        content: "❓";
+        font-size: 3rem;
+      }
+
+      #animal:hover::before {
+        content: attr(data-animal);
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h1>
+        <span role="img" aria-hidden="true" style="margin-right: 0.5rem"
+          >🐭</span
+        >Mouse Practice!
+      </h1>
+      <p>
+        Move the <span role="img" aria-label="mouse">🖱</span> to find the hidden
+        animals
+      </p>
+      <div id="field"></div>
+    </main>
+    <script>
+      const animals = ["🐝", "🐕", "🐈", "🦆", "🐢", "🐬", "🐑", "🐠", "🐁"];
+
+      (() => {
+        const fieldEl = document.getElementById("field");
+
+        function newAnimal() {
+          fieldEl.innerHTML = "";
+          const animalEl = document.createElement("button");
+          animalEl.id = "animal";
+          const column = Math.floor(Math.random() * 10) + 1;
+          const row = Math.floor(Math.random() * 10) + 1;
+          animalEl.dataset.animal =
+            animals[Math.floor(Math.random() * animals.length)];
+          animalEl.style.gridColumn = column;
+          animalEl.style.gridRow = row;
+          animalEl.addEventListener("click", newAnimal);
+
+          fieldEl.appendChild(animalEl);
+        }
+
+        newAnimal();
+      })();
+    </script>
+  </body>
+</html>
